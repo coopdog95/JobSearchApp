@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+{% block content %}
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Position</th>
+				<th>Company</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Salary</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for entry in JobEntrys %}
+		<tr>
+			<td>{{ entry.date_applied }}</td>
+			<td>{{ entry.position }}</td>
+			<td>{{ entry.company }}</td>
+			<td>{{ entry.city }}</td>
+			<td>{{ entry.state }}</td>
+			<td>{{ entry.salary }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock content %}
+
+
+

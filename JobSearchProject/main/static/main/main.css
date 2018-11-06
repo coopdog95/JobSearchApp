@@ -1,0 +1,15 @@
+#jobtable {
+	
+	padding-top:5%;
+}
+
+i {
+    color:white;
+    transform: scale(1.4);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width:100%;
+}
