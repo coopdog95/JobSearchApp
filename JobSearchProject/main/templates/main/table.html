@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% block content %}
+	<h2>You are seeing this because your account shouldn't have access to these entries.. uhh..</h2>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -12,7 +13,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		{% for entry in JobEntrys %}
+		{% for entry in JobEntries %}
 		<tr>
 			<td>{{ entry.date_applied }}</td>
 			<td>{{ entry.position }}</td>
@@ -20,10 +21,13 @@
 			<td>{{ entry.city }}</td>
 			<td>{{ entry.state }}</td>
 			<td>{{ entry.salary }}</td>
+			<td><a href="{% url 'entry-update' entry.id %}"><i class="fa fa-edit"></i></a></td>
+			<td><a href="{% url 'entry-delete' entry.id %}"><i class="fa fa-trash"></i></a></td>
 		</tr>
 		{% endfor %}
 		</tbody>
 	</table>
+	<a href="{% url 'entry-create' %}"><i class="fa fa-plus-circle" id="addJob"></i></a>
 {% endblock content %}
 
 

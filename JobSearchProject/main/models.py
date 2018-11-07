@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.shortcuts import redirect, render
+
 
 class JobEntry(models.Model):
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -14,4 +17,4 @@ class JobEntry(models.Model):
 
 	def __str__(self):
 		return (self.position+" "+self.company+" "+self.city+" "+self.state+" "+str(self.salary)+" "+self.response)
-				
+	
