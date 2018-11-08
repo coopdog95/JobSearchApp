@@ -1,11 +1,12 @@
 #jobtable {
 	
 	padding-top:5%;
+	margin-bottom:8%;
 }
 
 #loginIcon {
     color:white;
-    transform: scale(1.5);
+    transform: scale(1.7);
 }
 
 #addJob {

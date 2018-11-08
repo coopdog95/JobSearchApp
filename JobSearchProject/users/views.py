@@ -3,6 +3,8 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
+# users/views.py manages the form submittal for signing up and viewing one's profile
+
 
 def register(request):
 	if request.method == 'POST':	
@@ -38,3 +40,7 @@ def profile(request):
 		'p_form': p_form
 	}
 	return render(request, 'users/profile.html', context)
+
+def forbidden(request):
+	
+	return render(request, 'users/forbidden.html')

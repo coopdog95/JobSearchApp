@@ -21,7 +21,11 @@
 
 	    <!-- Navbar brand -->
 	    <a class="navbar-brand" href="{% url 'main-home' %}">Jobs By Cooper</a>
-	    <div class="navbar-nav ml-auto">
+	    {% if user.is_authenticated %}
+    	<p class="navbar-brand ml-auto mb-0" href="#">{{ user.username }}</p>
+    	{% endif %}
+	    <div class="navbar-nav ml-1">
+
 	    	<div class="btn-group dropleft" role="group">
 	    		<button class="btn amber dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
 	    				{% if user.is_authenticated %}
@@ -42,7 +46,7 @@
 	    			{% endif %}
 	    		</ul>
 	    	</div>
-
+	    </div>
 	    <!-- ICON 
 	    <div class="navbar-nav ml-auto" id="loginIcon">
 	    	<a href="#"><i class="fa fa-user-circle-o"></i></a>
@@ -68,7 +72,7 @@
 	<!-- /JobTable -->
 
 	<footer class="page-footer font-small indigo darken-2">
-		<div class="footer-copyright text-center py-3">© 2018 Copyright:
+		<div class="footer-copyright text-center py-3">© 2018 Copyright
 			<a href="https://coopertimmerman.com">Cooper Timmerman</a>
 		</div>
 	</footer>
