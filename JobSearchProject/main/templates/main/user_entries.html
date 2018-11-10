@@ -1,6 +1,27 @@
 {% extends "main/base.html" %}
 {% block content %}
 {% if user.is_authenticated %}
+	<div class="btn-group" id="sortbybutton">
+		<button type="button" class="btn btn-indigo darken-2 btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Sort by
+	</button>
+		<div class="dropdown-menu">
+			
+			<a href="#" class="dropdown-item">Date</a>
+			<a href="#" class="dropdown-item">Position</a>
+			<a href="#" class="dropdown-item">Company</a>
+			<a href="#" class="dropdown-item">City</a>
+			<a href="#" class="dropdown-item">State</a>
+			<a href="#" class="dropdown-item">Salary</a>
+			<a href="#" class="dropdown-item">Response</a>
+
+
+		</div>
+
+	</div>
+
+
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -10,24 +31,41 @@
 				<th>City</th>
 				<th>State</th>
 				<th>Salary</th>
+				<th class="text-muted">Edit</th>
+				<th class="text-muted">Delete</th>
 			</tr>
 		</thead>
 		<tbody>
 		{% for entry in JobEntries %}
-		<tr>
-			<td>{{ entry.date_applied }}</td>
-			<td>{{ entry.position }}</td>
-			<td>{{ entry.company }}</td>
-			<td>{{ entry.city }}</td>
-			<td>{{ entry.state }}</td>
-			<td>{{ entry.salary }}</td>
-			<td><a href="{% url 'entry-update' entry.id %}"><i class="fa fa-edit"></i></a></td>
-			<td><a href="{% url 'entry-delete' entry.id %}"><i class="fa fa-trash"></i></a></td>
-		</tr>
+			{% if entry.response == 1 %}
+			<tr>
+			{% endif %}
+			{% if entry.response == 2 %}
+			<tr class="table-info">
+			{% endif %}
+			{% if entry.response == 3 %}
+			<tr class="table-success">
+			{% endif %}
+			{% if entry.response == 4%}
+			<tr class="table-danger">
+			{% endif %}
+				<td>{{ entry.date_applied }}</td>
+				<td><b>{{ entry.position }}</b></td>
+				<td>{{ entry.company }}</td>
+				<td>{{ entry.city }}</td>
+				<td>{{ entry.state }}</td>
+				<td>{{ entry.salary }}</td>
+				<td><a href="{% url 'entry-update' entry.id %}"><i class="fa fa-edit"></i></a></td>
+				<td><a href="{% url 'entry-delete' entry.id %}"><i class="fa fa-trash"></i></a></td>
+			</tr>
 		{% endfor %}
 		</tbody>
 	</table>
-	<a href="{% url 'entry-create' %}"><i class="fa fa-plus-circle" id="addJob"></i></a>
+	<a href="{% url 'entry-create' %}">
+		<button type="button" class="btn btn-outline-indigo darken-2">
+		<i class="fa fa-plus-circle mb-0" id="addJob"></i>
+		</button>
+	</a>
 
 {% endif %}
 {% endblock content %}

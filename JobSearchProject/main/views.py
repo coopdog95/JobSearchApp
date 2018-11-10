@@ -7,27 +7,18 @@ from django.contrib.auth.decorators import login_required
 
 from .models import JobEntry
 
-
 def home(request):
-	context = { 
-	'JobEntries' : JobEntry.objects.filter(author=request.user)
+	context = {
+		'JobEntries' : JobEntry.objects.filter(author=request.user)
 	}
 	return render(request, 'main/user_entries.html', context)
-	#this return should bring user to landing page instead of entries
 
 class LandingView(View):
-
 
 	def get(self, request):
 		return render(request, 'main/landing.html')
 
-'''
-class EntryListView(ListView):
-	model = JobEntry
-	template_name = 'main/table.html'
-	context_object_name = 'JobEntries'
-	ordering = ['-date_applied']
-'''
+
 class UserEntryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	model = JobEntry
 	template_name = 'main/user_entries.html'
@@ -37,9 +28,8 @@ class UserEntryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		return JobEntry.objects.filter(author=user).order_by('-date_applied')
-
 	
-
+	
 	def test_func(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		if self.request.user == user:
@@ -47,9 +37,6 @@ class UserEntryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 		else:
 			return False
 		
-		
-
-
 
 class EntryCreateView(LoginRequiredMixin, CreateView):
 	model = JobEntry
@@ -69,10 +56,10 @@ class EntryCreateView(LoginRequiredMixin, CreateView):
 
 class EntryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = JobEntry
-	fields = ['position','company','city','state','salary']
+	fields = ['position','company','city','state','salary', 'response']
 
 	def get_success_url(self):
-			return reverse('user-entries', args=[self.request.user.username])	
+		return reverse('user-entries', args=[self.request.user.username])	
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user

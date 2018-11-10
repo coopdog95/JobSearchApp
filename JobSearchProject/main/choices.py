@@ -1,6 +1,6 @@
 RESPONSE_CHOICES = (
-	(1, _("No Response")),
-	(2, _("Interviewing")),
-	(3, _("Offer Received"),
-	(4, _("Rejected")),
+	(1, ("No Response")),
+	(2, ("Interviewing")),
+	(3, ("Offer Received")),
+	(4, ("Rejected"))
 	)

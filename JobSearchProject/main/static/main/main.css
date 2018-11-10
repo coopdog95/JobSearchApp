@@ -14,6 +14,10 @@
 	margin-left:2%;
 }
 
+#sortbybutton {
+	float:right;
+}
+
 footer {
     position: fixed;
     bottom: 0;

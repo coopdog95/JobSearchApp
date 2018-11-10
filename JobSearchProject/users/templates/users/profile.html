@@ -8,6 +8,7 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
+          <a href="{% url 'user-entries' user.username %}"><p class="text-secondary">View jobs.</p></a>
         </div>
       </div>
       <form method="POST" enctype="multipart/form-data">
@@ -18,8 +19,13 @@
         {{ p_form|crispy }}
       </fieldset>
       <div class="form-group">
+
         <button class="btn btn-outline-info" type="submit">Update</button>
       </div>
+      <small class="text-muted">
+      Click  
+      <a href="{% url 'password_reset' %}">here</a> to reset your password.
+      </small>
     </form>
 
     </div>

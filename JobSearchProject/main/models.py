@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect, render
+from .choices import *
 
 
 class JobEntry(models.Model):
@@ -13,8 +14,8 @@ class JobEntry(models.Model):
 	city = models.CharField(max_length=100, null=True)
 	state = models.CharField(max_length=2, null=True)
 	salary = models.IntegerField(default=0)
-	response = models.CharField(max_length=1,null=False, default='N')
+	response = models.IntegerField(choices=RESPONSE_CHOICES, default=1)
 
 	def __str__(self):
-		return (self.position+" "+self.company+" "+self.city+" "+self.state+" "+str(self.salary)+" "+self.response)
+		return (self.position+" "+self.company+" "+self.city+" "+self.state+" "+str(self.salary))
 	
