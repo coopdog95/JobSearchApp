@@ -1,24 +1,28 @@
 {% extends "main/base.html" %}
 {% block content %}
 {% if user.is_authenticated %}
-	<div class="btn-group" id="sortbybutton">
-		<button type="button" class="btn btn-indigo darken-2 btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		Sort by
-	</button>
-		<div class="dropdown-menu">
-			
-			
-			<a href="{% url 'user-entries' user.username %}?ordering=position&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Position</a>
-			<a href="#" class="dropdown-item">Company</a>
-			<a href="#" class="dropdown-item">City</a>
-			<a href="#" class="dropdown-item">State</a>
-			<a href="#" class="dropdown-item">Salary</a>
-			<a href="#" class="dropdown-item">Response</a>
+	<div class="container" id="searchsort">
+		<form type="get" action="{% url 'user-entries' user.username %}?search=" class="form-inline md-form form-sm mt-0 mb-0 ml-0">
+			<i class="fa fa-search ml-0" aria-hidden="true"></i>
+			<input id="search_box" type="text" name="search" placeholder="Search" class="form-control form-control-sm ml-3" aria-label="Search">
+		<div class="btn-group" id="sortbybutton">
+			<button type="button" class="btn btn-indigo darken-2 btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Sort by</button>
+			<div class="dropdown-menu">
+				<a href="{% url 'user-entries' user.username %}?ordering=date_applied&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Date</a>
+				<a href="{% url 'user-entries' user.username %}?ordering=position&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Position</a>
+				<a href="{% url 'user-entries' user.username %}?ordering=company&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Company</a>
+				<a href="{% url 'user-entries' user.username %}?ordering=city&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">City</a>
+				<a href="{% url 'user-entries' user.username %}?ordering=state&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">State</a>
+				<a href="{% url 'user-entries' user.username %}?ordering=salary&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Salary</a>
+				<a href="{% url 'user-entries' user.username %}?ordering=response&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Response</a>
+			</div>
 		</div>
-	</div>
+		</form>
 
+	</div>
 	<table class="table table-striped">
-		<thead>
+		<thead class="mt-0">
 			<tr>
 				<th><a href="{% url 'user-entries' user.username %}?ordering=date_applied&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Date</a></th>
 				<th><a href="{% url 'user-entries' user.username %}?ordering=position&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Position</a></th>
@@ -36,10 +40,10 @@
 			<tr>
 			{% endif %}
 			{% if entry.response == 2 %}
-			<tr class="table-info">
+			<tr class="table-success">
 			{% endif %}
 			{% if entry.response == 3 %}
-			<tr class="table-success">
+			<tr class="table-info">
 			{% endif %}
 			{% if entry.response == 4%}
 			<tr class="table-danger">

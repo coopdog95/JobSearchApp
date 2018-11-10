@@ -16,6 +16,20 @@
 
 #sortbybutton {
 	float:right;
+	margin-left:auto;
+}
+
+#search_box {
+	width:45%;
+	margin-right:auto;
+}
+
+#searchsort {
+
+	margin-bottom:0;
+	margin-left:0;
+	padding-left:0;
+	padding-right:0;
 }
 
 footer {

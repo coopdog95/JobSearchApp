@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from django.contrib.auth.decorators import login_required
+from rest_framework import filters
+from django.db.models import Q
+import re, operator
+from functools import reduce
 
 from .models import JobEntry
 
@@ -24,30 +28,37 @@ class UserEntryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	template_name = 'main/user_entries.html'
 	context_object_name = 'JobEntries'
 	#ordering = ['-date_applied']
+	filter_backends = (filters.SearchFilter)
+	#search_fields = ('position','company','city')
 
-	ordering_fields = '__all__'
-
-	'''
-	def get_ordering(self):
-		self.order = self.request.GET.get('order','asc')
-		selected_ordering = self.request.GET.get('ordering', 'position')
-		if self.order == "desc":
-			selected_ordering = "-" + selected_ordering
-		return selected_ordering
-
-	'''
-		
 	
+
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		ordering = self.request.GET.get('ordering', 'date_applied')
 		order = self.request.GET.get('order', 'desc')
-
+		
 		if order == 'desc':
 			ordering = "-" + ordering
 
+		query = self.request.GET.get('search')
+		result = super(UserEntryListView, self).get_queryset()
+		if query:
+			query_list = query.split()
+			result = result.filter(
+				reduce(operator.and_,
+					(Q(position__icontains=q) for q in query_list)) |
+				reduce(operator.and_,
+					(Q(company__icontains=q) for q in query_list)) |
+				reduce(operator.and_,
+					(Q(city__icontains=q) for q in query_list)) |
+				reduce(operator.and_,
+					(Q(state__icontains=q) for q in query_list))
+				)
+			return result.filter(author=user)
+	
 		return JobEntry.objects.filter(author=user).order_by(ordering)
-
+	
 	def get_context_data(self, *args, **kwargs):
 		context = super(UserEntryListView, self).get_context_data(**kwargs)
 		context['sortby'] = self.request.GET.get('ordering', 'date_applied')
@@ -55,7 +66,7 @@ class UserEntryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 		if context['order'] == 'desc':
 			context['sortby'] = "-"+context['sortby']
 		return context
-
+	
 	def test_func(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		if self.request.user == user:
