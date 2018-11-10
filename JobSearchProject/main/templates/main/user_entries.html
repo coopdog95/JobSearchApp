@@ -7,30 +7,25 @@
 	</button>
 		<div class="dropdown-menu">
 			
-			<a href="#" class="dropdown-item">Date</a>
-			<a href="#" class="dropdown-item">Position</a>
+			
+			<a href="{% url 'user-entries' user.username %}?ordering=position&order={% if order == 'desc' %}asc{% else %}desc{% endif %}" class="dropdown-item">Position</a>
 			<a href="#" class="dropdown-item">Company</a>
 			<a href="#" class="dropdown-item">City</a>
 			<a href="#" class="dropdown-item">State</a>
 			<a href="#" class="dropdown-item">Salary</a>
 			<a href="#" class="dropdown-item">Response</a>
-
-
 		</div>
-
 	</div>
-
-
 
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Position</th>
-				<th>Company</th>
-				<th>City</th>
-				<th>State</th>
-				<th>Salary</th>
+				<th><a href="{% url 'user-entries' user.username %}?ordering=date_applied&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Date</a></th>
+				<th><a href="{% url 'user-entries' user.username %}?ordering=position&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Position</a></th>
+				<th><a href="{% url 'user-entries' user.username %}?ordering=company&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Company</a></th>
+				<th><a href="{% url 'user-entries' user.username %}?ordering=city&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">City</a></th>
+				<th><a href="{% url 'user-entries' user.username %}?ordering=state&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">State</a></th>
+				<th><a href="{% url 'user-entries' user.username %}?ordering=salary&order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Salary</a></th>
 				<th class="text-muted">Edit</th>
 				<th class="text-muted">Delete</th>
 			</tr>

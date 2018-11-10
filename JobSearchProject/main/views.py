@@ -23,13 +23,39 @@ class UserEntryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	model = JobEntry
 	template_name = 'main/user_entries.html'
 	context_object_name = 'JobEntries'
-	ordering = ['-date_applied']
+	#ordering = ['-date_applied']
 
+	ordering_fields = '__all__'
+
+	'''
+	def get_ordering(self):
+		self.order = self.request.GET.get('order','asc')
+		selected_ordering = self.request.GET.get('ordering', 'position')
+		if self.order == "desc":
+			selected_ordering = "-" + selected_ordering
+		return selected_ordering
+
+	'''
+		
+	
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
-		return JobEntry.objects.filter(author=user).order_by('-date_applied')
-	
-	
+		ordering = self.request.GET.get('ordering', 'date_applied')
+		order = self.request.GET.get('order', 'desc')
+
+		if order == 'desc':
+			ordering = "-" + ordering
+
+		return JobEntry.objects.filter(author=user).order_by(ordering)
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(UserEntryListView, self).get_context_data(**kwargs)
+		context['sortby'] = self.request.GET.get('ordering', 'date_applied')
+		context['order'] = self.request.GET.get('order', 'desc')
+		if context['order'] == 'desc':
+			context['sortby'] = "-"+context['sortby']
+		return context
+
 	def test_func(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		if self.request.user == user:
